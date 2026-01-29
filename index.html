@@ -3,8 +3,11 @@
 <head>
   <title>MY ROOM – Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
   <style>
     body{
       background:#0b0f1a;
@@ -53,43 +56,46 @@
 </div>
 
 <script>
-  // 🔥 FIREBASE CONFIG (YAHAN APNI CONFIG DAALNI HAI)
-  const firebaseConfig = {
-    apiKey:"AIzaSyCOTH8PAP97inBLSf07IXDxALLYmr0btao",
+  // 🔥 PASTE YOUR REAL FIREBASE CONFIG HERE
+  var firebaseConfig = {
+    apiKey: "AIzaSyCOTH8PAP97inBLSf07IXDxALLYmr0btao",
     authDomain: "my-room-e12ae.firebaseapp.com",
     projectId:  "my-room-e12ae",
-    appId: "1:451097223242:web:bfa07871f65ed3d544c6b3"
-};
+    appId: "1:451097223242:web:549f11e11573ae4a44c6b3"
   };
 
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
+  var auth = firebase.auth();
 
   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
     'recaptcha-container',
-    { size: 'invisible' }
+    {
+      size: 'invisible'
+    }
   );
 
-  let confirmationResult;
+  var confirmationResult;
 
   function sendOTP(){
-    const phone = document.getElementById("phone").value;
+    var phone = document.getElementById("phone").value;
     auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
-      .then(result=>{
+      .then(function(result){
         confirmationResult = result;
-        document.getElementById("msg").innerText="OTP Sent";
-      }).catch(error=>{
-        document.getElementById("msg").innerText=error.message;
+        document.getElementById("msg").innerText = "OTP Sent";
+      })
+      .catch(function(error){
+        document.getElementById("msg").innerText = error.message;
       });
   }
 
   function verifyOTP(){
-    const code = document.getElementById("otp").value;
+    var code = document.getElementById("otp").value;
     confirmationResult.confirm(code)
-      .then(result=>{
-        document.getElementById("msg").innerText="Login Successful";
-      }).catch(error=>{
-        document.getElementById("msg").innerText="Wrong OTP";
+      .then(function(result){
+        document.getElementById("msg").innerText = "Login Successful";
+      })
+      .catch(function(error){
+        document.getElementById("msg").innerText = "Wrong OTP";
       });
   }
 </script>
